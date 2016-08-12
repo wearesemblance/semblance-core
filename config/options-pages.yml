@@ -1,0 +1,10 @@
+- id: was_settings
+  page_title: Semblance
+  capability: manage_options
+  cmb2_id: was_settings
+
+- id: was_loop_layouts
+  page_title: Loop Layouts
+  capability: manage_options
+  parent_slug: semblance
+  cmb2_id: was_loop_layouts_builder

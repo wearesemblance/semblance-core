@@ -1,0 +1,30 @@
+# Turn on default loop layouts
+- condition: variable true is true
+  settings:
+    priority: 9999
+
+- condition:
+    - var: is_main_query
+    - AND
+    -
+      - var: is_post_type_archive
+        params: [post]
+      -  OR
+      - var: is_home
+  settings:
+    id: blog-archive
+
+- condition:
+    - var: is_main_query
+    - AND
+    - var: \WAS\pre_is_singular
+      params: [post]
+  settings:
+    id: blog-single
+
+- condition:
+    - var: is_main_query
+    - AND
+    - var: is_page
+  settings:
+    id: page-single

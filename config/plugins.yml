@@ -1,0 +1,6 @@
+required:
+  - name: Imsanity
+    slug: imsanity
+
+  - name: WP Help
+    slug: wp-help

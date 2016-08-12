@@ -1,0 +1,14 @@
+# Theme specific settings
+mobile_viewport: true
+palette: {} # An array of color palette options
+font_families: {} # An array of font family options
+font_sizes: # An array of font size options
+  - 44px
+  - 37px
+  - 27px
+  - 23px
+  - 18px
+  - 16px
+
+line_heights: [] # An array of line_height options
+theme_support: [] # Custom theme support

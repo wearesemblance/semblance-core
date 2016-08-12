@@ -1,0 +1,73 @@
+- id: was_settings
+  name: Loop Layout Builder
+  hookup: false
+  show_on:
+    key: options-page
+    value: was_settings
+  fields:
+    - id: was_settings_social_links_title
+      type: title
+      name: Social Links Settings
+      desc: Configuration options to setup social links throughout your site.
+
+    - id: was_settings_social_links_facebook
+      type: text_url
+      name: Facebook
+      desc: Enter in your facebook page URL.
+
+    - id: was_settings_social_links_twitter
+      type: text_url
+      name: Twitter
+      desc: Enter in your twitter url.
+
+    - id: was_settings_social_links_pinterest
+      type: text_url
+      name: Pinterest
+      desc: Enter in your pinterest url
+
+    - id: was_settings_social_links_instagram
+      type: text_url
+      name: Instagram
+      desc: Enter in your instagram url.
+
+- id: was_loop_layouts_builder
+  name: Loop Layout Builder
+  hookup: false
+  show_on:
+    key: options-page
+    value: was_loop_layouts
+  fields:
+    - id: _group
+      name: Custom Layouts
+      type: group
+      options: 
+        group_title: 'Layout'
+        add_button: Add Layout
+        remove_button: Remove Layout
+        closed: true
+      fields: 
+        - id: id
+          type: text
+          name: ID
+          desc: A unique indentifier for this layout configuration.
+
+        - id: condition
+          type: text
+          type: radio_other
+          name: Condition
+          desc: A stringified condition to trigger this layout.
+          show_option_other: Custom
+          default: 'variable true is true'
+          options:
+            'variable true is true': 'Always'
+
+        - id: priority
+          type: text
+          name: Priority
+          desc: The priority of this layout.
+          default: 10
+
+        - id: query_args
+          type: textarea_code
+          name: Query Args
+          desc: 'Customize loop query args by adding "arg : value" each line'

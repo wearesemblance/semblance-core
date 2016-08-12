@@ -1,0 +1,28 @@
+{
+    "name": "semblance/semblance-core",
+    "description": "A core plugin for WordPress sites.",
+    "authors": [
+        {
+            "name": "Semblance",
+            "email": "hi@wearesemblance.com"
+        }
+    ],
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "./vendor/{$name}": ["wpackagist-plugin/cmb2"] 
+        }
+    },
+    "require": {
+        "socloz/spyc": "*",
+        "tgmpa/tgm-plugin-activation": "*",
+        "wpackagist-plugin/cmb2": "*"
+    },
+    "require-dev": {
+    }
+}

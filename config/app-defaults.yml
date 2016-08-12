@@ -1,0 +1,17 @@
+
+# App settings
+priority: 10 # Load priority
+version: 1.0.0 # App version
+js: [] # An array of asset params for js (see wp_register_script)
+css: [] # An array of asset params for css (see wp_register_style)
+
+# General settings
+image_sizes: [] # Custom image sizes
+breakpoints: # CSS breakpoints (for use in Visual Composer)
+  small: 0
+  medium: 640
+  large: 1200
+  xlarge: 1440
+  xxlarge: 1920
+
+sidebars: []
