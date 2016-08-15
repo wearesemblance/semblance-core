@@ -39,9 +39,11 @@ class App {
    * @see \WAS\App::__construct()
    * @see \WAS\App::$apps
    *
-   * @param string $id The string that identifies the app. Default false.
+   * @param string $id             The string that identifies the app. Default false.
    * @param array|string $settings Optional. App settings. Default empty.
-   * @param array|string $settings Optional. The __FILE__ from which this method was called. Include this if the current file's path is obscure. Default empty.
+   * @param array|string $settings Optional. The __FILE__ from which this method
+   *                               was called. Include this if the current file's
+   *                               path is obscure. Default empty.
    * @return \WAS\App Returns the singleton instance. Otherwise returns false if requirements not met.
    */
   public static function instance( $id = false, $settings = array(), $file = false ) {
@@ -73,9 +75,11 @@ class App {
    * @access private
    * @see \WAS\App::setup_config()
    *
-   * @param string $id The string that identifies the app. Default false.
+   * @param string $id             The string that identifies the app. Default false.
    * @param array|string $settings Optional. App settings. Default empty.
-   * @param array|string $settings Optional. The __FILE__ from which this method was called. Include this if the current file's path is obscure. Default empty.
+   * @param array|string $settings Optional. The __FILE__ from which this method
+   *                               was called. Include this if the current file's
+   *                               path is obscure. Default empty.
    * @return \WAS\App Returns the singleton instance. Otherwise returns false if requirements not met.
    */
   private function __construct( $id = false, $settings = array(), $file = false ) {
@@ -107,7 +111,8 @@ class App {
   /**
    * Autoloader
    *
-   * Autoloads classes based on a naming convention. Prefix your file names with class- abstract- interface- respectively.
+   * Autoloads classes based on a naming convention.
+   * Prefix your file names with class- abstract- interface- respectively.
    *
    * @since 1.0.0
    *
@@ -175,8 +180,8 @@ class App {
    * @since 1.0.0
    *
    * @param string $key The property or option key to get. Nested array values
-   *   can be traversed by separating keys via a "/""
-   *   example: $this->_get("array/key/nested_key")
+   *                    can be traversed by separating keys via a "/""
+   *                    example: $this->_get("array/key/nested_key")
    * @return mixed The value retrieved. Returns null if not found.
    */
   public function _get( $key = '' ) {
@@ -228,7 +233,7 @@ class App {
    * @see \WAS\App::setup_config()
    *
    * @param string $key The ID of the configuration to retrieve. Corresponds with
-   *  The configuration's filename.
+   *                    The configuration's filename.
    * @return array The YAML config as an array.
    */
   public function load_config( $key = false ) {
@@ -268,9 +273,9 @@ class App {
    * @see \WAS\App::get_default_config()
    *
    * @param array $settings Optional. An array of settings with the first level
-   *   being config ID/namespaces.
-   * @param string $file Optional. The file path to the app. If none is pased,
-   *   will try to guess the location of the app file.
+   *                        being config ID/namespaces.
+   * @param string $file    Optional. The file path to the app. If none is pased,
+   *                        will try to guess the location of the app file.
    * @return array The app's config property.
    */
   private function setup_config( $settings = array(), $file = false ) {
@@ -361,7 +366,7 @@ class App {
    * @see \WAS\App::load_config()
    *
    * @param array $id Optional. The ID or namespace of the configuration.
-   *   will try to guess the location of the app file.
+   *                  will try to guess the location of the app file.
    * @return array The default configuration of the passed namespace.
    */
   public function get_default_config( $id = 'app' ) {
@@ -511,8 +516,22 @@ class App {
     return false;
   }
 
-  // Get path or url based on identifier
-  public function app_location( $sector = '', $base = false ) {
+
+  /**
+   * Calculate an app-specific path/url
+   *
+   * Uses a passed "sector" or key to return a folder. Includes a trailing slash.
+   *
+   * @since 1.0.0
+   * @access private
+   *
+   * @param string $sector The sector to find.
+   * @param string $base   The base folder to append nested locations to. Defaults
+   *                       to the app's root if none is passed.
+   * @return string The calculated app location. Defaults to the app root if no
+   *                sector is passed.
+   */
+  private function app_location( $sector = '', $base = false ) {
     if ( ! $base ) {
       $path = $base;
       $base = $this->dir();
@@ -540,7 +559,20 @@ class App {
     return $path;
   }
 
-  // Get full app path
+  /**
+   * Get an app path
+   *
+   * Uses a passed "sector" or key to return a directory. Includes a trailing slash.
+   *
+   * @since 1.0.0
+   * @see \WAS\App::$app_path
+   * @see \WAS\App::app_location()
+   *
+   * @param string $sector The sector to find.
+   *                       to the app's root if none is passed.
+   * @return string The calculated app location. Defaults to the app root if no
+   *                sector is passed.
+   */
   public function dir( $sector = '' ) {
     // If the app path has not yet been set
     if ( ! $this->app_path ) {
@@ -563,7 +595,20 @@ class App {
     return $this->app_location( $sector, $this->app_path );
   }
 
-  // Get full app url
+  /**
+   * Get an app URL
+   *
+   * Uses a passed "sector" or key to return a URL. Includes a trailing slash.
+   *
+   * @since 1.0.0
+   * @see \WAS\App::$app_path
+   * @see \WAS\App::app_location()
+   *
+   * @param string $sector The sector to find.
+   *   to the app's root if none is passed.
+   * @return string The calculated app location. Defaults to the app root if no
+   *   sector is passed.
+   */
   public function url( $sector = '' ) {
     // If the app url has not yet been set
 
@@ -601,8 +646,22 @@ class App {
     }
   }
 
-  // Apply filters based on app id
-  public function apply_filters( $tag, $arg = ''  ) {
+
+  /**
+   * An app-specific wrapper for apply_filters()
+   *
+   * Works exactly like apply_filters() but adds the app $id as a prefix. Additionally,
+   * it passes the \WAS\App instance as the last parameter to the filter callback.
+   *
+   * @since 1.0.0
+   * @see apply_filters()
+   *
+   * @param string $tag     The name of the filter hook.
+   * @param mixed  $value   The value on which the filters hooked to `$tag` are applied on.
+   * @param mixed  $var,... Additional variables passed to the functions hooked to `$tag`.
+   * @return mixed The filtered value after all hooked functions are applied to it.
+   */
+  public function apply_filters( $tag, $value = ''  ) {
     $key = ( $this->is_core() ) ? 'was_core' : $this->id;
     $tag = sprintf( '%s/%s', $key, $tag );
     $args = func_get_args();
@@ -611,8 +670,22 @@ class App {
     return call_user_func_array( 'apply_filters', $args );
   }
 
-  // Do action based on app id
-  public function do_action( $tag, $arg = ''  ) {
+
+  /**
+    * An app-specific wrapper for do_action()
+    *
+    * Works exactly like do_action() but adds the app $id as a prefix. Additionally,
+    * it passes the \WAS\App instance as the last parameter to the filter callback.
+    *
+    * @since 1.0.0
+    * @see do_action()
+    *
+    * @param string $tag     The name of the filter hook.
+    * @param mixed  $value   The value on which the filters hooked to `$tag` are applied on.
+    * @param mixed  $var,... Additional variables passed to the functions hooked to `$tag`.
+    * @return void
+    */
+  public function do_action( $tag, $value = ''  ) {
     $key = ( $this->is_core() ) ? 'was_core' : $this->id;
     $tag = sprintf( '%s/%s', $key, $tag );
     $args = func_get_args();
@@ -621,27 +694,92 @@ class App {
     return call_user_func_array( 'do_action', $args );
   }
 
-  // Queue a filter based on app id
-  public function add_filter( $tag, $function, $priority = 10, $args = 1 ) {
+
+  /**
+    * An app-specific wrapper for add_filter()
+    *
+    * Adds a filter just like normal, but prefixes the $tag with the app $id.
+    *
+    * @since 1.0.0
+    * @see add_filter()
+    *
+    * @param string   $tag             The name of the filter to hook the $function_to_add callback to.
+    * @param callable $function_to_add The callback to be run when the filter is applied.
+    * @param int      $priority        Optional. Used to specify the order in which the functions
+    *                                  associated with a particular action are executed. Default 10.
+    *                                  Lower numbers correspond with earlier execution,
+    *                                  and functions with the same priority are executed
+    *                                  in the order in which they were added to the action.
+    * @param int      $accepted_args   Optional. The number of arguments the function accepts. Default 1.
+    * @return true
+    */
+  public function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
     $key = ( $this->is_core() ) ? 'was_core' : $this->id;
     $tag = sprintf( '%s/%s', $key, $tag );
-    return add_filter( $tag, $function, $priority, $args );
+    return add_filter( $tag, $function_to_add, $priority, $accepted_args );
   }
 
-  // Queue an action based on app id
-  public function add_action( $tag, $function, $priority = 10, $args = 1 ) {
+
+  /**
+    * An app-specific wrapper for add_action()
+    *
+    * Adds an action just like normal, but prefixes the $tag with the app $id.
+    *
+    * @since 1.0.0
+    * @see add_action()
+    *
+    * @param string   $tag             The name of the action to which the $function_to_add is hooked.
+    * @param callable $function_to_add The name of the function you wish to be called.
+    * @param int      $priority        Optional. Used to specify the order in which the functions
+    *                                  associated with a particular action are executed. Default 10.
+    *                                  Lower numbers correspond with earlier execution,
+    *                                  and functions with the same priority are executed
+    *                                  in the order in which they were added to the action.
+    * @param int      $accepted_args   Optional. The number of arguments the function accepts. Default 1.
+    * @return true Will always return true.
+    */
+  public function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
     $key = ( $this->is_core() ) ? 'was_core' : $this->id;
     $tag = sprintf( '%s/%s', $key, $tag );
-    return add_action( $tag, $function, $priority, $args );
+    return add_action( $tag, $function_to_add, $priority, $accepted_args );
   }
 
-  // Queue an action for core
-  public function core_action( $tag, $function, $priority = 10, $args = 1 ) {
+
+  /**
+    * A core-specific wrapper for add_action()
+    *
+    * Adds an action just like normal, but prefixes the $tag with the the core app $id.
+    *
+    * @since 1.0.0
+    * @see add_action()
+    *
+    * @param string   $tag             The name of the action to which the $function_to_add is hooked.
+    * @param callable $function_to_add The name of the function you wish to be called.
+    * @param int      $priority        Optional. Used to specify the order in which the functions
+    *                                  associated with a particular action are executed. Default 10.
+    *                                  Lower numbers correspond with earlier execution,
+    *                                  and functions with the same priority are executed
+    *                                  in the order in which they were added to the action.
+    * @param int      $accepted_args   Optional. The number of arguments the function accepts. Default 1.
+    * @return true Will always return true.
+    */
+  public function core_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
     $tag = sprintf( 'was_core/%s', $tag );
-    return add_action( $tag, $function, $priority, $args );
+    return add_action( $tag, $function_to_add, $priority, $accepted_args );
   }
 
-  // Core init
+
+  /**
+    * Initialize the core app
+    *
+    * Registers hooks for initializing other applications as well as pre/post
+    * initialization hooks.
+    *
+    * @since 1.0.0
+    * @see do_action()
+    *
+    * @return void
+    */
   public function init_core() {
     if ( ! $this->is_core() ) return; // Skip non-core
     $this->includes(); // Core includes
