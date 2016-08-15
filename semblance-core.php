@@ -2,12 +2,12 @@
 /*
 Plugin Name: Semblance Core
 Description: A core plugin for WordPress sites.
-Plugin URI: http://wearesemblance.com/plugins/semblance-core
+Plugin URI: https://github.com/wearesemblance/semblance-core
 Author: Semblance <hi@wearesemblance.com>
-Author URI: http://wearesemblance.com
+Author URI: https://github.com/wearesemblance
 Version: 1.0.0
 License: GPL2
-GitHub Plugin URI: https://github.com/semblance/semblance-core
+GitHub Plugin URI: https://github.com/wearesemblance/semblance-core
 GitHub Branch: master
 */
 
