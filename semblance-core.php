@@ -279,9 +279,9 @@ class App {
       $this->file = $file;
 
     // Calculate the type of app
-    if ( strpos( $file, WPMU_PLUGIN_DIR ) === 0 ) {
+    if ( strpos( $file, wp_normalize_path( WPMU_PLUGIN_DIR ) ) === 0 ) {
       $this->type = 'mu-plugin';
-    } else if ( strpos( $file, WP_PLUGIN_DIR ) === 0 ) {
+    } else if ( strpos( $file, wp_normalize_path( WP_PLUGIN_DIR ) ) === 0 ) {
       $this->type = 'plugin';
     } else if ( get_stylesheet_directory() === dirname( $file) ) {
       $this->type = 'theme';
